@@ -9,7 +9,7 @@ using namespace std;
 struct Student {
     string firstname;
     string surname;
-    string gender;
+    char gender;
     int age;
     int group;
     vector<string> sports;
@@ -58,9 +58,6 @@ bool openFile(ifstream &file, const string &filename) {
 }
 
 // Validation functions
-bool isValidGender(const string &gender) {
-    return gender == "Male" || gender == "Female";
-}
 
 bool isValidGroup(int group) {
     return group >= 1 && group <= 3;
@@ -122,10 +119,14 @@ void addStudent() {
     cin >> student.surname;
 
     while (true) {
-        cout << "Enter gender (Male/Female): ";
-        cin >> student.gender;
-        if (isValidGender(student.gender)) break;
-        else cout << "Invalid gender. Please enter 'Male' or 'Female'.\n";
+        cout << "Select gender (M/F): ";
+            cin >> student.gender;
+            student.gender = toupper(student.gender);
+            if (student.gender == 'M' || student.gender == 'F') {
+                student.gender;
+                break;
+            }
+            cout << "You may only type M or F.\n\n";
     }
 
     while (true) {
