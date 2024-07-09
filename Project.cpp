@@ -247,3 +247,62 @@ void saveAllFiles() {
         cerr << "Error opening output file 'names.csv'.\n";
         return ;
     }
+
+    // Write header row
+    outFile << "Firstname,Surname,Gender,Age,Group,Sports,Clubs\n";
+
+    // Write each student's data
+    for (const auto &student : students) {
+        outFile << student.firstname << "," << student.surname << ","
+                << student.gender << "," << student.age << ","
+                << student.group << ",";
+
+        // Write sports
+        outFile << "\"";
+        for (size_t i = 0; i < student.sports.size(); ++i) {
+            outFile << student.sports[i];
+            if (i < student.sports.size() - 1)
+                outFile << ", ";
+        }
+        outFile << "\",";
+
+        // Write clubs
+        outFile << "\"";
+        for (size_t i = 0; i < student.clubs.size(); ++i) {
+            outFile << student.clubs[i];
+            if (i < student.clubs.size() - 1)
+                outFile << ", ";
+        }
+        outFile << "\"\n";
+    }
+
+    outFile.close();
+    cout << "Data saved to names.csv\n";
+}
+
+void menu() {
+    int choice;
+    do {
+        cout << "\nMenu\n";
+        cout << "1. Add Student\n";
+        cout << "2. View Students (ALL and per group)\n";
+        cout << "3. View Clubs/Societies\n";
+        cout << "4. View Sports\n";
+        cout << "5. View Grouped Students\n";
+        cout << "6. Save All Files\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addStudent(); break;
+            case 2: viewStudents(); break;
+            case 3: viewActivities(clubs, "Clubs/Societies"); break;
+            case 4: viewActivities(sports, "Sports"); break;
+            case 5: viewGroupedStudents(); break;
+            case 6: saveAllFiles(); break;
+            case 7: cout << "Exiting program.\n"; break;
+            default: cout << "Invalid choice. Please try again.\n"; break;
+        }
+    } while (choice != 7);
+}
