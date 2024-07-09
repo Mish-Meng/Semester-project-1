@@ -141,3 +141,57 @@ void addStudent() {
         if (isValidGroup(student.group)) break;
         else cout << "Invalid group. Please enter a number between 1 and 3.\n";
     }
+
+    cout << "Select activities for the student.\n";
+
+    int sportChoice;
+    int clubChoice;
+    string input;
+    bool participatingInSport = false;
+
+    // Select Sport
+    cout << "Do you want to participate in a sport? (yes/no): ";
+    cin >> input;
+    if (input == "yes") {
+        participatingInSport = true;
+        while (true) {
+            cout << "Select a sport: \n1. Rugby\n2. Athletics\n3. Swimming\n4. Soccer\n";
+            cin >> sportChoice;
+            if (isValidSportChoice(sportChoice)) {
+                student.sports.push_back(sports[sportChoice - 1].name);
+                break;
+            } else {
+                cout << "Invalid choice. Please select a sport from the list.\n";
+            }
+        }
+    }
+
+    // Select Clubs
+    cout << "Select clubs (Enter up to 3 clubs, separated by spaces): \n1. Journalism Club\n2. Red Cross Society\n3. AISEC\n4. Business Club\n5. Computer Science Club\n";
+    if (participatingInSport) {
+        cout << "You can select up to 2 clubs.\n";
+    } else {
+        cout << "You can select up to 3 clubs.\n";
+    }
+    int maxClubs = participatingInSport ? 2 : 3;
+    for (int i = 0; i < maxClubs; ++i) {
+        while (true) {
+            cin >> clubChoice;
+            if (isValidClubChoice(clubChoice)) {
+                student.clubs.push_back(clubs[clubChoice - 1].name);
+                break;
+            } else {
+                cout << "Invalid choice. Please select a club from the list.\n";
+            }
+        }
+        if (i < maxClubs - 1) {
+            cout << "Add another club? (yes/no): ";
+            cin >> input;
+            if (input == "no") break;
+        }
+    }
+
+    students.push_back(student);
+    cout << "Student added successfully!\n";
+}
+
